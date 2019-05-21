@@ -1,0 +1,6 @@
+# IntelliJ project files
+.idea
+*.iml
+/logs/
+/target/
+/nature-data-import.iml

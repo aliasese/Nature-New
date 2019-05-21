@@ -1,0 +1,13 @@
+使用方式：
+1. 安装JDK1.8+
+2. 安装Maven
+3. 下载该程序
+4. 在项目根目录执行 mvn clean install -Dmaven.test.skip
+5. 在target目录拿到*.zip
+6. 解压zip, 根据config.properties里面注释提示，添加或者修改参数
+7. 运行，在bin目录双击*.bat
+8. 运行完毕
+9. 错误日志log-error
+10. 异常日志log-warn
+11. 开发者日志log-debug
+12. 全部日志log-info

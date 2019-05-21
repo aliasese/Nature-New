@@ -1,0 +1,60 @@
+<assembly>
+    <id>${version}</id>
+    <formats>
+        <format>zip</format><!--打包的文件格式,也可以有：war zip-->
+    </formats>
+    <!--tar.gz压缩包下是否生成和项目名相同的根目录-->
+    <!-- 比如finalName是output，当值为true，所有文件被放在output目录下，否则直接放在包的根目录下 -->
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <!--<dependencySets>
+        <dependencySet>
+            &lt;!&ndash; unpack参数可以控制依赖包是否在打包进来时是否解开，例如解开所有包 &ndash;&gt;
+            <unpack>false</unpack>
+            &lt;!&ndash;是否把本项目自身生成的jar添加到依赖文件夹下&ndash;&gt;
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lsp-${artifactId}-${version}</outputDirectory>
+            &lt;!&ndash;将scope为runtime的依赖包打包&ndash;&gt;
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>-->
+    <fileSets>
+        <!--<fileSet>
+            <directory>${project.build.directory}/site/jacoco</directory>
+            <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>jacoco-sessions.html</include>
+            </includes>
+        </fileSet>-->
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>tutor.txt</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>${project.artifactId}-fat.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/assembly</directory>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0755</fileMode>
+            <includes>
+                <include>bin/*</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>config.properties</include>
+                <include>local_site.xlsx</include>
+                <include>ftp_PUB_19-04-06_05-50-17.zip</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
