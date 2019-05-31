@@ -1,9 +1,6 @@
 package com.cnebula.nature.configuration;
 
-import com.cnebula.nature.dto.Affiliation;
-import com.cnebula.nature.dto.Article;
-import com.cnebula.nature.dto.AuthAff;
-import com.cnebula.nature.dto.Author;
+import com.cnebula.nature.dto.*;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.HibernateException;
@@ -37,6 +34,7 @@ public class HibernateConfiguration {
                 .addAnnotatedClass(Author.class)
                 .addAnnotatedClass(AuthAff.class)
                 .addAnnotatedClass(Affiliation.class)
+                .addAnnotatedClass(ArticleXML.class)
                 .addAnnotatedClass(Article.class);
         //2.获取SessionFactory
         try {

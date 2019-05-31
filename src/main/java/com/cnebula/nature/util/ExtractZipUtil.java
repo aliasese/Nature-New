@@ -1,23 +1,21 @@
 package com.cnebula.nature.util;
 
 import com.cnebula.nature.ThreadTask.ParseXMLCallableImpl;
-import com.cnebula.nature.ThreadTask.ParseXMLRunableImpl;
 import com.cnebula.nature.configuration.DefaultConfiguration;
 import com.cnebula.nature.configuration.HibernateConfiguration;
 import com.cnebula.nature.dto.Article;
 import com.cnebula.nature.entity.Configuration;
 import com.cnebula.nature.entity.FileNameEntity;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -95,8 +93,17 @@ public class ExtractZipUtil {
                 Class.forName(HibernateConfiguration.class.getName(), true, HibernateConfiguration.class.getClassLoader());
             } catch (Throwable e) {
                 e.printStackTrace();
-                throw new RuntimeException(e);
+                throw e;
             }
+
+            // Init PROCEDURE of SQLServer, then the process of removing duplication will use it.
+            HibernateConfiguration.sessionFactory.openSession().doWork(connection -> {
+                try {
+                    DBUtil.initDB(connection);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
             LinkedList<Future> futures = new LinkedList<>();
             // Parse XML then check duplication of Article
@@ -113,14 +120,12 @@ public class ExtractZipUtil {
             resoults = new LinkedHashMap<>();
             resoults.put("TotalCount", fileNames.size());
 
-            successCount = 0;
             if (executorService.isTerminated()) {
-                System.out.println("*****************SHUTDOWN*****************");
                 for (Future<Object> future:futures) {
-                    if (future.isDone() && future.isCancelled()) {
+                    if (future.isDone()) {
                         successCount += 1;
                         System.out.println(future.get());
-                    } else if (future.isDone()){
+                    } else if (future.isDone() && future.isCancelled()){
                         if (future.get() instanceof Throwable) {
                             throw (Throwable)future.get();
                         }
@@ -129,7 +134,6 @@ public class ExtractZipUtil {
             }
         } catch (RuntimeException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
-
             throw e;
         } catch (Throwable throwable) {
             throwable.printStackTrace();

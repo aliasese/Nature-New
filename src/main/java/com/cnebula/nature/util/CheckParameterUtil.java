@@ -20,7 +20,7 @@ public class CheckParameterUtil {
         PARAMETERS.add(DefaultConfiguration.NAME_USERNAME);
         PARAMETERS.add(DefaultConfiguration.NAME_PASSWORD);
         PARAMETERS.add(DefaultConfiguration.NAME_ZIPFILEDIR);
-        PARAMETERS.add(DefaultConfiguration.NAME_LOCALSITEINFOXML);
+        //PARAMETERS.add(DefaultConfiguration.NAME_LOCALSITEINFOXML);
         PARAMETERS.add(DefaultConfiguration.NAME_PDFBASEDIR);
     }
 
@@ -46,7 +46,7 @@ public class CheckParameterUtil {
         String username = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_USERNAME)) ? properties.getProperty(DefaultConfiguration.NAME_USERNAME) : DefaultConfiguration.DEF_USERNAME;
         String password = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_PASSWORD)) ? properties.getProperty(DefaultConfiguration.NAME_PASSWORD) : DefaultConfiguration.DEF_PASSWORD;
         String zipFileDir = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_ZIPFILEDIR)) ? properties.getProperty(DefaultConfiguration.NAME_ZIPFILEDIR) : DefaultConfiguration.DEF_ZIP;
-        String localSiteInfoXML = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML)) ? properties.getProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML) : DefaultConfiguration.DEF_LOCALSITEXML;
+        //String localSiteInfoXML = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML)) ? properties.getProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML) : DefaultConfiguration.DEF_LOCALSITEXML;
         String pdfBaseDir = !StringUtils.isEmpty(properties.getProperty(DefaultConfiguration.NAME_PDFBASEDIR)) ? properties.getProperty(DefaultConfiguration.NAME_PDFBASEDIR) : DefaultConfiguration.DEF_PDFBASE;
 
         properties.setProperty(DefaultConfiguration.NAME_DBHOST, dbHost);
@@ -54,7 +54,7 @@ public class CheckParameterUtil {
         properties.setProperty(DefaultConfiguration.NAME_USERNAME, username);
         properties.setProperty(DefaultConfiguration.NAME_PASSWORD, password);
         properties.setProperty(DefaultConfiguration.NAME_ZIPFILEDIR, zipFileDir);
-        properties.setProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML, localSiteInfoXML);
+        //properties.setProperty(DefaultConfiguration.NAME_LOCALSITEINFOXML, localSiteInfoXML);
         properties.setProperty(DefaultConfiguration.NAME_PDFBASEDIR, pdfBaseDir);
     }
 }

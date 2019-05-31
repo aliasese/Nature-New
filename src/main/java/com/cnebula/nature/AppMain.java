@@ -26,7 +26,7 @@ public class AppMain {
 
     private final static Logger log = LoggerFactory.getLogger(AppMain.class);
 
-    public static void main(String[] agrs) throws IOException {
+    public static void main(String[] agrs) throws Throwable {
         log.info("=======================================Begin=====================================");
         log.info("Main thread begin to start for 'Nature data importing tool'");
         String userDir = System.getProperty("user.dir");
@@ -70,6 +70,7 @@ public class AppMain {
         } catch (Throwable e) {
             e.printStackTrace();
             log.error("Error to parse zip, caused: " + e.getLocalizedMessage(), e);
+            throw e;
         } finally {
             HibernateConfiguration.sessionFactory = null;
         }

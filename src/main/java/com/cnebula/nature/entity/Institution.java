@@ -11,13 +11,13 @@ public class Institution {
     private String city = "";
     private String state = "";
     private String country = "";
-    private String email = "";
+    //private String email = "";
 
     public Institution() {
     }
 
     @Override
     public String toString() {
-        return this.orgDivision + " " + this.orgName + " " + this.city + " " + this.state + " " + this.country + " " + this.email;
+        return this.orgDivision + " " + this.orgName + " " + this.city + " " + this.state + " " + this.country;
     }
 }
