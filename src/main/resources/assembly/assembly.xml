@@ -52,7 +52,6 @@
             <outputDirectory>/</outputDirectory>
             <includes>
                 <include>config.properties</include>
-                <include>local_site.xlsx</include>
                 <include>ftp_PUB_19-05-13_20-11-42.zip</include>
             </includes>
         </fileSet>
