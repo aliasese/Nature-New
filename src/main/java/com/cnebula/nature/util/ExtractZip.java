@@ -1,6 +1,5 @@
 package com.cnebula.nature.util;
 
-import com.cnebula.nature.ThreadTask.ParseXMLRunableImpl;
 import com.cnebula.nature.dto.Article;
 import com.cnebula.nature.entity.FileNameEntity;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
