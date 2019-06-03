@@ -21,25 +21,25 @@ public class Article {
     private String pips = ""; //全文文件名称,即pdf扩展后缀名.之前的名称
 
     @Column(name = "pii", nullable = true)
-    private String pii = ""; // 电子资源唯一标示
+    private String pii; // 电子资源唯一标示
 
     @Column(name = "doi", nullable = true)
-    private String doi = ""; // 电子资源唯一标示
+    private String doi; // 电子资源唯一标示
 
     @Column(name = "pnm", nullable = true)
-    private String publisherName = ""; //出版社名称
+    private String publisherName; //出版社名称
 
     @Column(name = "jtl", nullable = false)
-    private String journalTitle = ""; //期刊名称
+    private String journalTitle; //期刊名称
 
     @Column(name = "jtl_sort", nullable = false)
-    private String jtlSort = ""; //期刊排序名称
+    private String jtlSort; //期刊排序名称
 
     @Column(name = "jtl_index", nullable = false)
-    private String jtlIndex = ""; //期刊排序名称
+    private String jtlIndex; //期刊排序名称
 
     @Column(name = "jabt", nullable = false)
-    private String jabt = ""; //期刊排序名称
+    private String jabt; //期刊排序名称
 
     @Column(name = "issn9", nullable = true)
     private String issn9; // issn
@@ -48,25 +48,25 @@ public class Article {
     private String issn8; // issn8 去掉中间横杠
 
     @Column(name = "vid", nullable = false)
-    private String volume = ""; //卷号
+    private String volume; //卷号
 
     @Column(name = "iid", nullable = true)
-    private String issue = ""; //期号
+    private String issue; //期号
 
     @Column(name = "cd", nullable = true)
-    private String pubDate = ""; //出版日期
+    private String pubDate; //出版日期
 
     @Column(name = "cd_pub", nullable = true)
-    private String cdPub = "";
+    private String cdPub;
 
     @Column(name = "pubstatus", nullable = true)
     private String pubStatus;
 
     @Column(name = "categ", nullable = true)
-    private String categ = ""; //文章所属类目
+    private String categ; //文章所属类目
 
     @Column(name = "lang", nullable = true)
-    private String language = "";
+    private String language;
 
     @Column(name = "ppct", nullable = true)
     private String ppct; //页码长度
@@ -78,19 +78,19 @@ public class Article {
     private String ppl; //终止页码
 
     @Column(name = "atl", nullable = false)
-    private String atl = ""; //文章名称
+    private String atl; //文章名称
 
     @Column(name = "atl_sort", nullable = false)
-    private String atlSort = ""; //文章排序名称
+    private String atlSort; //文章排序名称
 
     @Column(name = "atl_index", nullable = false)
-    private String atlIndex = ""; //文章索引名称
+    private String atlIndex; //文章索引名称
 
     @Column(name = "abst", nullable = true)
-    private String abst = ""; //文章摘要
+    private String abst; //文章摘要
 
     @Column(name = "filesize", nullable = true)
-    private String fileSize = ""; //文章PDF文件大小
+    private String fileSize; //文章PDF文件大小
 
     @Column(name = "paperflag", nullable = true)
     private Integer paperFlag = 0; //未知, 数据库字段全0，所以此处默认 0
@@ -99,7 +99,7 @@ public class Article {
     private Integer absFlag; //文章是否有摘要,0:无 1:有
 
     @Column(name = "oricontent", nullable = true)
-    private String oriContent = ""; //文章原始XML
+    private String oriContent; //文章原始XML
 
 
     public Article() {
@@ -350,9 +350,19 @@ public class Article {
         if (!StringUtils.isEmpty(day)) {
             if (day.length() == 1) day = "0" + day;
         }
-        if (year != null) this.pubDate += year;
-        if (month != null) this.pubDate += month;
-        if (day != null) this.pubDate += day;
+        if (year != null) {
+            this.pubDate = this.pubDate == null ? "" : this.pubDate;
+            this.pubDate += year;
+        }
+        if (month != null) {
+            this.pubDate = this.pubDate == null ? "" : this.pubDate;
+            this.pubDate += month;
+        };
+        if (day != null) {
+            this.pubDate = this.pubDate == null ? "" : this.pubDate;
+            this.pubDate += day;
+        }
+        this.cdPub = this.cdPub == null ? "" : this.cdPub;
         this.cdPub = this.pubDate;
     }
 
