@@ -1,6 +1,7 @@
 package com.cnebula.nature.test;
 
 import com.cnebula.nature.dto.Affiliation;
+import org.json.JSONArray;
 import org.junit.Test;
 
 import java.io.*;
@@ -76,5 +77,11 @@ public class FileTest {
             if (i == 1) continue;
             System.out.println(arr[i]);
         }
+    }
+
+    @Test
+    public void testJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+        System.out.println(jsonArray.toString());
     }
 }

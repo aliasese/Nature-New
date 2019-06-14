@@ -35,10 +35,17 @@
             <charset>utf-8</charset>
         </layout>
         <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印DEBUG日志 -->
-            <level>INFO</level>
+            <level>TRACE</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>ACCEPT</onMismatch>
         </filter>
+    </appender>
+
+    <appender name="ASYFILE" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="FILE"/>
     </appender>
 
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -66,6 +73,12 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+    <appender name="ASYDEBUG" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="DEBUG"/>
+    </appender>
 
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs-warn/nature-warn.log</file>
@@ -91,6 +104,12 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+    </appender>
+    <appender name="ASYWARN" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="WARN"/>
     </appender>
 
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -118,14 +137,20 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+    <appender name="ASYERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="ERROR"/>
+    </appender>
 
     <!-- Configure so that it outputs to both console and log file -->
-    <root level="INFO">
+    <root level="TRANCE">
         <appender-ref ref="CONSOLE" />
-        <appender-ref ref="FILE" />
-        <appender-ref ref="DEBUG" />
-        <appender-ref ref="WARN" />
-        <appender-ref ref="ERROR" />
+        <appender-ref ref="ASYFILE" />
+        <appender-ref ref="ASYDEBUG" />
+        <appender-ref ref="ASYWARN" />
+        <appender-ref ref="ASYERROR" />
     </root>
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="DEBUG"/>
 </configuration>

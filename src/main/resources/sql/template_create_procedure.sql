@@ -42,22 +42,15 @@ BEGIN
 		BEGIN
 			SELECT aid INTO #tb_tmp_aut FROM nature.dbo.author WHERE artid = @artid
 			SELECT affid INTO #tb_tmp_aff FROM nature.dbo.aff WHERE artid = @artid
-			SELECT @aid = MIN(aid) FROM #tb_tmp_aut
+			-- SELECT @aid = MIN(aid) FROM #tb_tmp_aut
 			BEGIN TRY
-				WHILE @aid IS NOT NULL
-					BEGIN
-						SELECT @affid = MIN(affid) FROM #tb_tmp_aff
-						WHILE @affid IS NOT NULL
-							BEGIN
-								BEGIN TRAN T1
-									DELETE FROM nature.dbo.author_aff
-										WHERE aid = @aid
-											AND affid = @affid
-								COMMIT TRAN T1
-								SELECT @affid = MIN(affid) FROM #tb_tmp_aff WHERE affid > @affid
-							END
-						SELECT @aid = MIN(aid) FROM #tb_tmp_aut WHERE aid > @aid
-					END
+        SET   TRANSACTION   ISOLATION   LEVEL   REPEATABLE READ
+        BEGIN TRAN T1
+          DELETE FROM nature.dbo.author_aff
+          WHERE aid IN (SELECT aid FROM #tb_tmp_aut)
+                OR affid IN (SELECT affid FROM #tb_tmp_aff)
+        COMMIT TRAN T1
+				SET   TRANSACTION   ISOLATION   LEVEL   REPEATABLE READ
 				BEGIN TRAN T2
 					DELETE FROM nature.dbo.aff WHERE artid = @artid
 					DELETE FROM nature.dbo.author WHERE artid = @artid

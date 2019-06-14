@@ -3,23 +3,22 @@ package com.cnebula.nature.util;
 import com.cnebula.nature.ThreadTask.ParseXMLCallableImpl;
 import com.cnebula.nature.configuration.DefaultConfiguration;
 import com.cnebula.nature.configuration.HibernateConfiguration;
-import com.cnebula.nature.dto.Article;
 import com.cnebula.nature.entity.Configuration;
 import com.cnebula.nature.entity.FileNameEntity;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipFile;
-import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class ExtractZipUtil {
+
+    private final static Logger log = LoggerFactory.getLogger(ExtractZipUtil.class);
 
     /*private static int getFromIndex(String fullPath, String str,Integer count) {
         System.out.println(str);
@@ -122,9 +121,15 @@ public class ExtractZipUtil {
 
             if (executorService.isTerminated()) {
                 for (Future<Object> future:futures) {
-                    if (future.isDone()) {
-                        successCount += 1;
-                        System.out.println(future.get());
+                    if (future.isDone() && !future.isCancelled()) {
+                        Object result = future.get();
+                        if (result != null && String.valueOf(result).equalsIgnoreCase("SUCCESS")) {
+                            successCount += 1;
+                            System.out.println(result);
+                            log.info(String.valueOf(result));
+                        } else {
+                            log.warn(String.valueOf(result));
+                        }
                     } else if (future.isDone() && future.isCancelled()){
                         if (future.get() instanceof Throwable) {
                             throw (Throwable)future.get();
@@ -137,11 +142,12 @@ public class ExtractZipUtil {
             throw e;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            throw throwable;
+            //throw throwable;
+        } finally {
+            resoults.put("SuccessCount", successCount);
+            resoults.put("FailCount", fileNames.size() - successCount);
         }
 
-        resoults.put("SuccessCount", successCount);
-        resoults.put("FailCount", fileNames.size() - successCount);
 
         return resoults;
 
