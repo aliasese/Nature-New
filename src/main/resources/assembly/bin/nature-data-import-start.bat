@@ -1,4 +1,7 @@
 @echo off & setlocal enabledelayedexpansion
+SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0_211\jdk1.8.0_211
+set CLASSPATH=.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
+set PATH=%JAVA_HOME%\bin;
 
 set APP="nature-data-import-fat"
 

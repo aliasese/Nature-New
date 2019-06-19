@@ -8,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-IF EXISTS(SELECT * FROM sys.procedures WHERE name = 'pc_remove_duplication')
+IF EXISTS(SELECT * FROM sysobjects WHERE TYPE='P' AND name = 'pc_remove_duplication')
     BEGIN
       PRINT 'PROCEDURE: pc_remove_duplication has been existed already'
       DROP procedure dbo.pc_remove_duplication
@@ -43,7 +43,7 @@ BEGIN
 			SELECT aid INTO #tb_tmp_aut FROM nature.dbo.author WHERE artid = @artid
 			SELECT affid INTO #tb_tmp_aff FROM nature.dbo.aff WHERE artid = @artid
 			-- SELECT @aid = MIN(aid) FROM #tb_tmp_aut
-			BEGIN TRY
+			-- BEGIN TRY
         SET   TRANSACTION   ISOLATION   LEVEL   REPEATABLE READ
         BEGIN TRAN T1
           DELETE FROM nature.dbo.author_aff
@@ -57,8 +57,9 @@ BEGIN
 					DELETE FROM nature.dbo.content WHERE artid = @artid
 					DELETE FROM nature.dbo.tb_article WHERE artid = @artid
 				COMMIT TRAN T2
-			END TRY
-			BEGIN CATCH
+			-- END TRY
+			-- BEGIN CATCH
+			IF @@ERROR <> 0
 				IF @@TRANCOUNT > 0
 					BEGIN
 						ROLLBACK TRAN
@@ -67,7 +68,7 @@ BEGIN
 					BEGIN
 						PRINT 'SUCCESS TO CASCADING DELETE'
 					END
-			END CATCH
+			-- END CATCH
 			DROP TABLE #tb_tmp_aut
 			DROP TABLE #tb_tmp_aff
 			SELECT @artid = MIN(artid) FROM #tb_tmp_art WHERE artid > @artid

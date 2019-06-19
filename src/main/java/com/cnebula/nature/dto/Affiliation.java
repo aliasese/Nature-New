@@ -12,8 +12,8 @@ public class Affiliation {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(generator = "affid")
-    @GenericGenerator(name = "affid", strategy = "increment")
+    @GeneratedValue(generator = "affid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "affid", strategy = "native")
     @Column(name = "affid", nullable = false)
     private Integer affid;
 

@@ -191,7 +191,7 @@ public class ParseXMLCallableImpl implements Callable<Object> {
 
                 for (int i = 0; i < pubDate.length(); i++) {
                     String dateType = pubDate.getJSONObject(i).getString("date-type");
-                    if (dateType.contentEquals("ppub")) {
+                    if (dateType.contentEquals("ppub") || dateType.contentEquals("epub")) {
                         String day = pubDate.getJSONObject(i).has("day") ? String.valueOf(pubDate.getJSONObject(i).get("day")) : null;
                         String month = String.valueOf(pubDate.getJSONObject(i).get("month"));
                         String year = String.valueOf(pubDate.getJSONObject(i).get("year"));
@@ -199,6 +199,10 @@ public class ParseXMLCallableImpl implements Callable<Object> {
                         at.setPubStatus(dateType);
                         break;
                     }
+                }
+
+                if (StringUtils.isEmpty(at.getPubDate())) {
+                    at.setPubDate("9999"); // Set the value of cd is 9999 if there is  suggested by Mike Zhu.
                 }
             }
 

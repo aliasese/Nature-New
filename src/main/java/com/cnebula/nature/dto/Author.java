@@ -12,8 +12,8 @@ public class Author {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(generator = "aid")
-    @GenericGenerator(name = "aid", strategy = "increment")
+    @GeneratedValue(generator = "aid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "aid", strategy = "native")
     @Column(name = "aid", nullable = false)
     private Integer aid;
 

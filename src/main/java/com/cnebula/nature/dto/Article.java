@@ -11,8 +11,8 @@ public class Article {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(generator = "artid")
-    @GenericGenerator(name = "artid", strategy = "increment")
+    @GeneratedValue(generator = "artid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "artid", strategy = "native")
     @Column(name = "artid", nullable = false)
     private Integer artid; //Primary key
 

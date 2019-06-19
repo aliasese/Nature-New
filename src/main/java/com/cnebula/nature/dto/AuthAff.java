@@ -12,8 +12,8 @@ public class AuthAff {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(generator = "au_affid")
-    @GenericGenerator(name = "au_affid", strategy = "increment")
+    @GeneratedValue(generator = "au_affid", strategy = GenerationType.AUTO)
+    @GenericGenerator(name = "au_affid", strategy = "native")
     @Column(name = "au_affid", nullable = false)
     private Integer auAffid;
 

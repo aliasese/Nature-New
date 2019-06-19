@@ -12,7 +12,7 @@ public class ArticleXML {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(generator = "id")
+    @GeneratedValue(generator = "id", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "id", strategy = "increment")
     @Column(name = "id", nullable = false)
     private Integer id; //Primary key
